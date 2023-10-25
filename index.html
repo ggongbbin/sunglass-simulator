@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sunglass simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@600&display=swap" rel="stylesheet">
+    <style>
+        *{font-family: 'Noto Sans KR', sans-serif;}
+        body{background: blue; margin:0;}
+
+        #nav-bar {
+            display: flex;
+            justify-content: space-around;
+            
+            color: blue;
+            padding: 10px 0;
+        }
+
+        #nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 2em;
+            
+        }
+
+        #image-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #image-container img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+        #canvas {
+            width: 100vw;
+            height: 90vh;
+            top:80px;
+            position: absolute;
+        }
+        
+        .draggable-image {
+            width: 190px;
+            height: auto;
+            position: absolute;
+
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+
+<div id="canvas">
+    <img id="image1" src="1.png" class="draggable-image">
+    <img id="image2" src="2.png" class="draggable-image">
+    <img id="image3" src="3.png" class="draggable-image">
+    <img id="image3" src="4.png" class="draggable-image">
+    <img id="image3" src="5.png" class="draggable-image">
+    <img id="image3" src="6.png" class="draggable-image">
+    <img id="image3" src="7.png" class="draggable-image">
+ 
+</div>
+
+<div id="nav-bar">
+    <a href="#" onclick="changeImage('계란형.jpg')">계란형</a>
+    <a href="#" onclick="changeImage('둥근형.jpg')">둥근형</a>
+    <a href="#" onclick="changeImage('땅콩형.jpg')">땅콩형</a>
+    <a href="#" onclick="changeImage('마름모.jpg')">마름모</a>
+    <a href="#" onclick="changeImage('육각형.jpg')">육각형</a>  
+    <a href="#" onclick="changeImage('하트형.jpg')">하트형</a> 
+</div>
+
+<div id ="image-container">
+   <img id="img1" src="계란형.jpg">
+   <img id="img2" src="둥근형.jpg">
+   <img id="img3" src="땅콩형.jpg">
+   <img id="img4" src="마름모.jpg">
+   <img id="img5" src="육각형.jpg">
+   <img id="img6" src="하트형.jpg">
+   <img id="img1" src="계란형.jpg"> 
+ </div>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+var selectedImage = null;
+
+function dragStart(event) {
+    selectedImage = event.target;
+}
+
+function dragOver(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault();
+    
+   var x = event.clientX - canvas.offsetLeft - selectedImage.width / 2; 
+   var y = event.clientY - canvas.offsetTop - selectedImage.height / 2;
+
+   selectedImage.style.left = x + "px";
+   selectedImage.style.top = y + "px";
+
+   selectedImage = null;
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+     var images = document.getElementsByClassName("draggable-image");
+
+     for (var i=0; i<images.length; i++) { 
+         images[i].addEventListener("mousedown", dragStart);
+     }
+
+     canvas.addEventListener("mousemove", dragOver);
+     canvas.addEventListener("mouseup", drop);
+});
+
+function changeImage(imageName) {
+
+   var imageContainer = document.getElementById("image-container");
+
+   
+   imageContainer.innerHTML = '<img src="' + imageName + '">';
+
+}
+
+
+
+</script>
+
+</body>
+</html>
